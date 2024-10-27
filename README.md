@@ -99,13 +99,13 @@ if we become overwhelmed by amount of our wraps we can have them in one place:
 
 ```go
 // executable is our method type (func[T any](T) any)
-func Run[T any](fn hw.Executable[T]) hw.Wrapper[T] {
-	return Catch(Validate(hw.Run(fn)))
+func Wrap[T any](fn hw.Wrapper[T]) func(http.ResponseWriter, *http.Request) {
+	return hw.Wrap(Catch(Validate(fn)), nil)
 }
 
 func AddPing(){
   // i use here hw.Wrap to be able to put here endpoint specific wraps (like authorization)
-  http.handle("/ping", hw.Wrap(Run(Ping), nil))
+  http.handle("/ping", Wrap(hw.Run(Ping)))
 }
 ```
 
