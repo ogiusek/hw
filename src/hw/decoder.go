@@ -9,7 +9,7 @@ import (
 )
 
 // any here can be (nil, *resp, T)
-type Decoder[T any] func(*http.Request) any // should return T or nil
+type Decoder[T any] func(*http.Request) any // should return T, Resp or nil
 
 func DefaultDecoder[T any](r *http.Request) any {
 	var args T
