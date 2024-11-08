@@ -15,8 +15,11 @@ func DefaultDecoder[T any](r *http.Request) any {
 	var args T
 	if r.Method == http.MethodGet {
 		decoder := schema.NewDecoder()
-		err := decoder.Decode(&args, r.URL.Query())
+		var mapped map[string]any
+		err := decoder.Decode(&mapped, r.URL.Query())
 		if err == nil {
+			encoded, _ := json.Marshal(mapped)
+			json.Unmarshal(encoded, &args)
 			return args
 		}
 		res := NewResponse()
