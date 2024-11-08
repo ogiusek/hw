@@ -21,7 +21,7 @@ func DefaultDecoder[T any](r *http.Request) any {
 		}
 		res := NewResponse()
 		res.WriteHeader(http.StatusBadRequest)
-		io.WriteString(res, "invalid search params")
+		io.WriteString(res, err.Error())
 		return res
 	}
 	decoder := json.NewDecoder(r.Body)
